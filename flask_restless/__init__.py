@@ -38,7 +38,7 @@ from .views import ProcessingException
 #:
 #: This should be the same as the version specified in the :file:`setup.py`
 #: file.
-__version__ = '1.0.0b2-dev'
+__version__ = '1.0.1'
 
 __all__ = [
     'APIManager',
