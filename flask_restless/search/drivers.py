@@ -137,9 +137,9 @@ def search(session, model, filters=None, sort=None, group_by=None,
                 if ignorecase:
                     field = field.collate('NOCASE')
                 direction = getattr(field, direction_name)
-                query = query.join(relation_model)
+                query = query.outerjoin(relation_model)
                 if sub_relation_model:
-                    query = query.join(sub_relation_model)
+                    query = query.outerjoin(sub_relation_model)
                 query = query.order_by(direction())
             else:
                 field = getattr(model, field_name)
