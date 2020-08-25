@@ -127,6 +127,10 @@ def to_tsquery(arg1, arg2):
 def plainto_tsquery(arg1, arg2):
     return arg1.op('@@')(func.plainto_tsquery(arg2))
 
+def ilike_no_nlbr(arg1, arg2):
+    return func.REPLACE(arg1, ' ', '').ilike(arg2.replace(' ', ''))
+ 
+
 
 #: Operator functions keyed by name.
 #:
@@ -179,6 +183,7 @@ OPERATORS = {
     'any': any_,
     'to_tsquery': to_tsquery,
     'plainto_tsquery': plainto_tsquery,
+    'ilike!nlbr': ilike_no_nlbr
 }
 
 

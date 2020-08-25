@@ -1190,6 +1190,20 @@ class TestOperators(SearchTestBase):
         assert ['bar', 'baz'] == sorted(person['attributes']['name']
                                         for person in people)
 
+    def test_ilike_without_space(self):
+        """Tests for the ``ilike`` operator."""
+        person1 = self.Person(name=u'afoo bar')
+        person2 = self.Person(name=u'foobar')
+        person3 = self.Person(name=u'baz')
+        self.session.add_all([person1, person2, person3])
+        self.session.commit()
+        filters = [dict(name='name', op='ilike!nlbr', val='%fooba%')]
+        response = self.search('/api/person', filters)
+        document = loads(response.data)
+        people = document['data']
+        assert ['afoo bar', 'foobar'] == sorted(person['attributes']['name']
+                                        for person in people)
+
     def test_in(self):
         """Tests for the ``in`` operator."""
         person1 = self.Person(id=1)
